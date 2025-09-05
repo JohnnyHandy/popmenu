@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rspec/rspec-rails
-  revision: 2371f2862a7b8c6be61393597f2be844fa0151a9
+  revision: a313574b17f408a365a62bbedd99f59f80b5ea03
   specs:
     rspec-rails (8.1.0.pre)
       actionpack (>= 7.2)
