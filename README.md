@@ -1,25 +1,7 @@
-# README
+# Foobar
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Foobar is a Python library for dealing with word pluralization.
 
-Things you may want to cover:
+## Level 1
+Added the **Menu** and **MenuItem** Models and basic tests for controllers and models.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# popmenu
