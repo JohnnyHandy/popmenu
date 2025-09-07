@@ -1,5 +1,5 @@
 class MenuItem < ApplicationRecord
   belongs_to :menu
-
-  validates :menu, presence: true
+  belongs_to :item
+  validates :menu, :item, presence: true
 end
