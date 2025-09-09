@@ -1,24 +1,9 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe RestaurantsController, type: :controller do
-  describe "GET index" do
-    it "index" do
-      get :index
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET show" do
-    it "index" do
-      restaurant = create(:restaurant)
-      get :show, params: { id: restaurant.id }
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "POST import_json_data" do
-    it "/import_json_data" do
-      json = {
+RSpec.describe ImportRestaurantDataService, type: :service do
+  describe "Case one: Assert creation of models" do
+    let(:params) {
+      {
         "restaurants": [
           {
             "name": "Poppo's Cafe",
@@ -88,8 +73,40 @@ RSpec.describe RestaurantsController, type: :controller do
           }
         ]
       }
-      post "import_json_data", params: json
-      expect(response).to have_http_status(:success)
+    }
+
+    it "Should create two Restaurants, 4 menus and 9 dishes" do
+      expect { ImportRestaurantDataService.new(params).call }.to change(Restaurant, :count).by(2) and change(Menu, :count).by(4) and change(Item, :count).by(9)
+    end
+  end
+
+  describe "Case two: Assert update of Item price" do
+    let(:params) {
+      {
+        "restaurants": [
+          "name": "Pop Restaurant",
+          "menus": [
+            {
+              "name": "Pop Menu",
+              "menu_items": [
+                {
+                  "name": "Pop Item",
+                  "price": 30
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    }
+
+    it "Should update item price" do
+      restaurant = create(:restaurant, name: "Pop Restaurant")
+      menu = create(:menu, restaurant: restaurant, name: "Pop Menu")
+      item = create(:item, restaurant: restaurant, name: "Pop Item")
+      menu_item = create(:menu_item, item: item, menu: menu)
+      ImportRestaurantDataService.new(params).call
+      expect(menu_item.reload.price).to eq(0.3e2)
     end
   end
 end

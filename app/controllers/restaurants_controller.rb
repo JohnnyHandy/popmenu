@@ -38,7 +38,17 @@ class RestaurantsController < ApplicationController
     @restaurant.destroy!
   end
 
+  def import_json_data
+    result = ImportRestaurantDataService.new(import_json_data_params).call
+    render json: result
+  end
+
   private
+
+    def import_json_data_params
+      params.permit(restaurants: [ menus: [ :menu_items, :dishes ] ])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_menu
       @restaurant = Restaurant.find(params.expect(:id))

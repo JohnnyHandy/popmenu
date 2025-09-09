@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
   has_many :menu_items
-  validates_uniqueness_of :name
+  belongs_to :restaurant
+  validates :name, presence: true, uniqueness: { scope: :restaurant_id }
 end

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :restaurants
   resources :menu_items
   resources :menus
+  post "/restaurants/import_json_data", to: "restaurants#import_json_data"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
